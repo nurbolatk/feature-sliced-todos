@@ -1,5 +1,5 @@
 import {createAsyncThunk, createDraftSafeSelector, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {jsonPlaceholderApi, Task} from 'shared/api'
+import {jsonPlaceholderApi, Status, Task} from 'shared/api'
 import {RootState} from "shared/store";
 
 type ReduxTask = {
@@ -9,7 +9,7 @@ type ReduxTask = {
 export type FILTER_OPTIONS = 'ALL' | 'COMPLETED' | 'NOT_COMPLETED'
 
 type TaskList = {
-    status: 'idle' | 'pending' | 'fulfilled' | 'rejected'
+    status: Status
     tasks?: ReduxTask,
     error?: string
     filter: FILTER_OPTIONS
@@ -73,7 +73,14 @@ const selectTasks = createDraftSafeSelector(selectSelf, (state: TaskList) => {
         tasks,
     }
 })
+const selectTaskById = (id: string) => createDraftSafeSelector(selectSelf, (state: TaskList) => {
+    const task = state.tasks?.[id]
+    const {status, error} = state
+    return {
+        status, task, error
+    }
+})
 const {toggleTask, setFilter} = slice.actions
 
-export {toggleTask, setFilter, selectTasks, fetchTaskList}
+export {toggleTask, setFilter, selectTasks, fetchTaskList, selectTaskById}
 export default slice

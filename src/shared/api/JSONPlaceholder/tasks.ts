@@ -12,6 +12,6 @@ export const getTaskList = (params?: GetTodoListParams): AxiosPromise<Task[]> =>
     return apiInstance.get(BASE_URL, {params})
 }
 
-export const getTaskById = (id: number): AxiosPromise<Task> => {
+export const getTaskById = (id: string): AxiosPromise<Task> => {
     return apiInstance.get(`${BASE_URL}/${id}`)
 }

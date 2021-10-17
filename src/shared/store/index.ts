@@ -1,10 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
-import taskModel from "entities/task";
+import {taskList} from "entities/task";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 export const store = configureStore({
     reducer: {
-        tasks: taskModel.reducer
+        tasks: taskList.reducer
     },
     devTools: true
 })

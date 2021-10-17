@@ -1,1 +1,2 @@
-export * from "./task-row";
+export * from "./TaskRow";
+export * from './TaskCard'

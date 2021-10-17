@@ -1,14 +1,10 @@
-import {useEffect} from "react";
-import {fetchTaskList, selectTasks, TaskRow} from "entities/task";
-import {useAppDispatch, useAppSelector} from "shared/store";
+import {selectTasks, TaskRow} from "entities/task";
+import {useAppSelector} from "shared/store";
 import {Col, Layout, Row, Spin, Typography} from "antd";
-import {TaskFilters, ToggleTask} from "features";
+import {TaskFilters} from "features/TaskFilters";
+import {ToggleTask} from "features/ToggleTask";
 
 const TaskListPage = () => {
-    const dispatch = useAppDispatch()
-    useEffect(() => {
-        dispatch(fetchTaskList())
-    }, [dispatch])
     const {status, tasks} = useAppSelector(selectTasks)
     const isLoading = (status === 'idle' || status === 'pending')
     return <Layout>
