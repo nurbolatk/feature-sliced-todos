@@ -1,22 +1,24 @@
 import {useEffect} from "react";
 import {fetchTaskList, selectTasks, TaskRow} from "entities/task";
-import {useAppDispatch} from "shared/store";
-import {useSelector} from "react-redux";
-import {Checkbox, Col, Layout, Row, Spin, Typography} from "antd";
+import {useAppDispatch, useAppSelector} from "shared/store";
+import {Col, Layout, Row, Spin, Typography} from "antd";
+import {TaskFilters, ToggleTask} from "features";
 
-const TestPage = () => {
+const TaskListPage = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(fetchTaskList())
     }, [dispatch])
-    const {status, tasks} = useSelector(selectTasks)
+    const {status, tasks} = useAppSelector(selectTasks)
     const isLoading = (status === 'idle' || status === 'pending')
     return <Layout>
         <Layout.Header>
             <Row justify="center">
                 <Typography.Title level={1}>Tasks List</Typography.Title>
             </Row>
-            {/* TODO: TasksFilters */}
+            <Row>
+                <TaskFilters/>
+            </Row>
         </Layout.Header>
         <Layout.Content>
             <Row gutter={[0, 20]} justify="center">
@@ -24,7 +26,7 @@ const TestPage = () => {
                 {
                     tasks?.map(task => (
                         <Col key={task.id} span={24}>
-                            <TaskRow data={task} titleHref={`/${task.id}`} before={<Checkbox/>}/>
+                            <TaskRow data={task} titleHref={`/${task.id}`} before={<ToggleTask task={task}/>}/>
                         </Col>
                     ))
                 }
@@ -33,4 +35,4 @@ const TestPage = () => {
     </Layout>;
 };
 
-export default TestPage;
+export default TaskListPage;

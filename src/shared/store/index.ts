@@ -1,10 +1,10 @@
 import {configureStore} from "@reduxjs/toolkit";
-import {TaskReducer} from "entities/task";
-import {useDispatch} from "react-redux";
+import taskModel from "entities/task";
+import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 
 export const store = configureStore({
     reducer: {
-        tasks: TaskReducer
+        tasks: taskModel.reducer
     },
     devTools: true
 })
@@ -14,3 +14,4 @@ export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
 export const useAppDispatch = () => useDispatch<AppDispatch>()
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
