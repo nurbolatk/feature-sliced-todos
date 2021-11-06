@@ -1,9 +1,9 @@
-import taskList from './model/TaskList'
+import * as taskModel from './model/TaskModel'
 
-export * from './model/TaskList'
+export * from './model/TaskModel'
 export * from './model/DataFetcher'
 export * from './ui'
 
 export {
-    taskList
+    taskModel
 }

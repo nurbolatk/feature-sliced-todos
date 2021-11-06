@@ -1,20 +1,30 @@
-import {Radio} from 'antd'
 import {useAppDispatch, useAppSelector} from "shared/store";
-import {selectTasks, setFilter} from "entities/task";
+import {FILTER_OPTIONS, taskModel} from "entities/task";
+import {ChangeEventHandler} from "react";
 
 export const TaskFilters = (): JSX.Element => {
-    const {filter} = useAppSelector(selectTasks)
+    const {filter} = useAppSelector(taskModel.selectors.selectTasks)
     const dispatch = useAppDispatch()
+    const handleRadioChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+        const {value} = e.target
+        dispatch(taskModel.actions.setFilter(value.toUpperCase() as FILTER_OPTIONS))
+    }
 
-    return <Radio.Group value={filter}>
-        <Radio.Button value={'ALL'} onClick={() => dispatch(setFilter('ALL'))}>
-            All
-        </Radio.Button>
-        <Radio.Button value={'COMPLETED'} onClick={() => dispatch(setFilter('COMPLETED'))}>
-            Completed
-        </Radio.Button>
-        <Radio.Button value={'NOT_COMPLETED'} onClick={() => dispatch(setFilter('NOT_COMPLETED'))}>
-            Not Completed
-        </Radio.Button>
-    </Radio.Group>
+    return <div>
+        <label htmlFor="all">
+            <input type="radio" name="filter" value="all" checked={filter === "ALL"} id="all"
+                   onChange={handleRadioChange}/>
+            ALL
+        </label>
+        <label htmlFor="completed">
+            <input type="radio" name="filter" value="completed" checked={filter === 'COMPLETED'} id="completed"
+                   onChange={handleRadioChange}/>
+            COMPLETED
+        </label>
+        <label htmlFor="not-completed">
+            <input type="radio" name="filter" value="not_completed" checked={filter === 'NOT_COMPLETED'}
+                   id="not-completed" onChange={handleRadioChange}/>
+            NOT COMPLETED
+        </label>
+    </div>
 }

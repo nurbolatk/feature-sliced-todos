@@ -64,7 +64,7 @@ const slice = createSlice({
         })
     }
 })
-const selectSelf = (state: RootState) => state.tasks
+const selectSelf = (state: RootState): TaskList => state.tasks as TaskList
 const selectTasks = createDraftSafeSelector(selectSelf, (state: TaskList) => {
     const allTasks = Object.values(state.tasks ?? {})
     const tasks = state.filter === 'COMPLETED' ? allTasks.filter(task => task.completed) : state.filter === 'NOT_COMPLETED' ? allTasks.filter(task => !task.completed) : allTasks
@@ -82,5 +82,7 @@ const selectTaskById = (id: string) => createDraftSafeSelector(selectSelf, (stat
 })
 const {toggleTask, setFilter} = slice.actions
 
-export {toggleTask, setFilter, selectTasks, fetchTaskList, selectTaskById}
-export default slice
+const {reducer} = slice
+const actions = {toggleTask, setFilter, fetchTaskList}
+const selectors = {selectTasks, selectTaskById}
+export {reducer, actions, selectors}

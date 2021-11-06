@@ -1,4 +1,3 @@
-import {Row} from "antd";
 import {Link} from 'react-router-dom'
 import cn from 'classnames'
 import styles from './styles.module.scss'
@@ -11,8 +10,8 @@ export type TaskRowProps = {
 }
 
 export const TaskRow = ({data, before, titleHref}: TaskRowProps) => {
-    return <Row className={cn({[styles.completed]: data.completed})}>
+    return <div className={cn({[styles.completed]: data.completed})}>
         {before}
         {titleHref ? <Link to={titleHref}>{data.title}</Link> : data.title}
-    </Row>
+    </div>
 }
