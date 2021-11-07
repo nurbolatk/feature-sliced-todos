@@ -11,19 +11,19 @@ export const TaskFilters = (): JSX.Element => {
     }
 
     return <div>
-        <label htmlFor="all">
-            <input type="radio" name="filter" value="all" checked={filter === "ALL"} id="all"
+        <label>
+            <input type="radio" name="filter" value="all" checked={filter === "ALL"}
                    onChange={handleRadioChange}/>
             ALL
         </label>
-        <label htmlFor="completed">
-            <input type="radio" name="filter" value="completed" checked={filter === 'COMPLETED'} id="completed"
+        <label>
+            <input type="radio" name="filter" value="completed" checked={filter === 'COMPLETED'}
                    onChange={handleRadioChange}/>
             COMPLETED
         </label>
-        <label htmlFor="not-completed">
+        <label>
             <input type="radio" name="filter" value="not_completed" checked={filter === 'NOT_COMPLETED'}
-                   id="not-completed" onChange={handleRadioChange}/>
+                   onChange={handleRadioChange}/>
             NOT COMPLETED
         </label>
     </div>
