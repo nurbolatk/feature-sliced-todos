@@ -40,6 +40,14 @@ const slice = createSlice({
         },
         setFilter: (state, action: PayloadAction<FILTER_OPTIONS>) => {
             state.filter = action.payload
+        },
+        addTask: (state, action: PayloadAction<{ title: string, completed: boolean }>) => {
+            console.log(state.tasks, action.payload)
+            if (state.tasks) {
+                const id = Date.now()
+                const {title, completed} = action.payload
+                state.tasks[id] = {id, title, completed}
+            }
         }
     },
     extraReducers: builder => {
@@ -80,9 +88,8 @@ const selectTaskById = (id: string) => createDraftSafeSelector(selectSelf, (stat
         status, task, error
     }
 })
-const {toggleTask, setFilter} = slice.actions
 
 const {reducer} = slice
-const actions = {toggleTask, setFilter, fetchTaskList}
+const actions = {...slice.actions, fetchTaskList}
 const selectors = {selectTasks, selectTaskById}
 export {reducer, actions, selectors}

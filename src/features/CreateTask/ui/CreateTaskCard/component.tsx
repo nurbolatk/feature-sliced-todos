@@ -1,11 +1,16 @@
 import * as React from 'react'
 import {TaskCardFormElement} from "./types";
+import {taskModel} from "entities/task";
+import {useAppDispatch} from "shared/store";
 
 export const CreateTaskCard = (): JSX.Element => {
+    const dispatch = useAppDispatch()
     const handleSubmit = (event: React.FormEvent<TaskCardFormElement>) => {
         event.preventDefault()
         const {title, completed} = event.currentTarget.elements
-        console.log({title: title.value, completed: completed.value})
+        const data = {title: title.value, completed: completed.value === 'COMPLETED'}
+        console.log(data)
+        dispatch(taskModel.actions.addTask(data))
     }
     return <div>
         <form onSubmit={handleSubmit}>
