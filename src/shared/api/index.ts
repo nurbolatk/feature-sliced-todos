@@ -1,2 +1,2 @@
-export * as jsonPlaceholderApi from './JSONPlaceholder'
 export * from './models'
+export * as firebaseApi from './firebase'

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createDraftSafeSelector, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {jsonPlaceholderApi, Status, Task} from 'shared/api'
+import {firebaseApi, Status, Task} from 'shared/api'
 import {RootState} from "shared/store";
 
 type ReduxTask = {
@@ -24,8 +24,9 @@ const initialState = {
 const fetchTaskList = createAsyncThunk(
     '[tasks] fetch all tasks',
     async () => {
-        const response = await jsonPlaceholderApi.getTaskList()
-        return response.data
+        const tasks = await firebaseApi.getTaskList()
+        console.log({tasks})
+        return tasks
     }
 )
 
@@ -33,7 +34,7 @@ const slice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        toggleTask: (state, action: PayloadAction<number>) => {
+        toggleTask: (state, action: PayloadAction<string>) => {
             if (state.tasks) {
                 state.tasks[action.payload].completed = !state.tasks[action.payload].completed
             }
@@ -43,11 +44,11 @@ const slice = createSlice({
         },
         addTask: (state, action: PayloadAction<{ title: string, completed: boolean }>) => {
             console.log(state.tasks, action.payload)
-            if (state.tasks) {
-                const id = Date.now()
-                const {title, completed} = action.payload
-                state.tasks[id] = {id, title, completed}
-            }
+            // if (state.tasks) {
+            //     const id = Date.now()
+            //     const {title, completed} = action.payload
+            //     state.tasks[id] = {id, title, completed}
+            // }
         }
     },
     extraReducers: builder => {
