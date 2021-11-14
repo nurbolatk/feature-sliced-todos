@@ -1,5 +1,11 @@
-import {createAsyncThunk, createDraftSafeSelector, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {firebaseApi, Status, Task} from 'shared/api'
+import {
+    AsyncThunkAction,
+    createAsyncThunk,
+    createDraftSafeSelector,
+    createSlice,
+    PayloadAction
+} from "@reduxjs/toolkit";
+import {firebaseApi, NewTask, Status, Task} from 'shared/api'
 import {RootState} from "shared/store";
 
 type ReduxTask = {
@@ -22,33 +28,44 @@ const initialState = {
 } as TaskList
 
 const fetchTaskList = createAsyncThunk(
-    '[tasks] fetch all tasks',
-    async () => {
-        const tasks = await firebaseApi.getTaskList()
-        console.log({tasks})
-        return tasks
+    '[tasks] fetch all',
+    async (): Promise<Task[]> => {
+        return await firebaseApi.getTaskList()
     }
 )
+
+const createTask = createAsyncThunk(
+    '[tasks] create',
+    async (newTask: NewTask) => {
+        return await firebaseApi.createTask(newTask)
+    }
+)
+
+const updateTask = createAsyncThunk(
+    '[tasks] update',
+    async ({newTask}: { oldTask: Task, newTask: Task }): Promise<void> => {
+        return await firebaseApi.updateTask(newTask)
+    }
+)
+
+const toggleTask = (task: Task): AsyncThunkAction<void, { oldTask: Task, newTask: Task }, {}> => {
+    return updateTask({
+        oldTask: task, newTask: {...task, completed: !task.completed}
+    })
+}
 
 const slice = createSlice({
     name: 'tasks',
     initialState,
     reducers: {
-        toggleTask: (state, action: PayloadAction<string>) => {
-            if (state.tasks) {
-                state.tasks[action.payload].completed = !state.tasks[action.payload].completed
-            }
-        },
         setFilter: (state, action: PayloadAction<FILTER_OPTIONS>) => {
             state.filter = action.payload
         },
-        addTask: (state, action: PayloadAction<{ title: string, completed: boolean }>) => {
-            console.log(state.tasks, action.payload)
-            // if (state.tasks) {
-            //     const id = Date.now()
-            //     const {title, completed} = action.payload
-            //     state.tasks[id] = {id, title, completed}
-            // }
+        addTask: (state, action: PayloadAction<Task>) => {
+            if (state.tasks) {
+                const {id} = action.payload
+                state.tasks[id] = action.payload
+            }
         }
     },
     extraReducers: builder => {
@@ -71,6 +88,22 @@ const slice = createSlice({
             state.tasks = undefined
             state.error = action.error.message ?? 'error when fetching todo list'
         })
+        builder.addCase(updateTask.pending, (state, action) => {
+            const {newTask} = action.meta.arg
+            if (state.tasks?.[newTask.id]) {
+                state.tasks[newTask.id] = newTask
+            }
+        })
+        builder.addCase(updateTask.fulfilled, (state, action) => {
+            state.error = undefined
+        })
+        builder.addCase(updateTask.rejected, (state, action) => {
+            if (state.tasks) {
+                const {oldTask, newTask} = action.meta.arg
+                state.tasks[newTask.id] = oldTask
+            }
+            state.error = action.error.message
+        })
     }
 })
 const selectSelf = (state: RootState): TaskList => state.tasks as TaskList
@@ -91,6 +124,6 @@ const selectTaskById = (id: string) => createDraftSafeSelector(selectSelf, (stat
 })
 
 const {reducer} = slice
-const actions = {...slice.actions, fetchTaskList}
+const actions = {...slice.actions, fetchTaskList, createTask, updateTask, toggleTask}
 const selectors = {selectTasks, selectTaskById}
 export {reducer, actions, selectors}
