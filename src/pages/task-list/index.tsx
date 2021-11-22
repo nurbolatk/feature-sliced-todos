@@ -17,6 +17,7 @@ const TaskListPage = () => {
         <div>App Header</div>
         <div><TaskFilters/></div>
         <CreateTaskCard/>
+
         <div>
             {error && <p style={{color: 'red'}}>{error}</p>}
             {

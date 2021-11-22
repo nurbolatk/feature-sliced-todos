@@ -1,0 +1,42 @@
+input[type="checkbox"] {
+  --checkbox-color: var(--bright-gray);
+  color: var(--checkbox-color);
+  appearance: none;
+  background-color: transparent;
+  margin: 0 0.5rem 0 0;
+  font: inherit;
+  width: 1.1em;
+  height: 1.1em;
+  border: 0.125em solid currentColor;
+  border-radius: 0.3125em; // 5px from 16px
+  transition: all 0.2s;
+  display: inline-flex;
+}
+
+input[type="checkbox"]:checked {
+  --checkbox-color: var(--accent-color);
+  background-color: currentColor;
+  border: 0.125em solid currentColor;
+}
+
+input[type="checkbox"]::before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: no-repeat center/contain url("./tick.svg");
+}
+
+input[type= "checkbox" ]:checked::before {
+  opacity: 1;
+}
+
+input[type="checkbox"]:focus {
+  --checkbox-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 4px 1px currentColor;
+}
+
+input[type="checkbox"]:disabled {
+  --checkbox-color: var(--pattens-blue);
+  cursor: not-allowed;
+}
