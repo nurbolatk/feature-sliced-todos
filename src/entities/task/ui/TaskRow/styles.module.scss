@@ -1,3 +1,12 @@
 .completed {
   text-decoration: line-through;
 }
+
+.task-row {
+  display: flex;
+  align-items: center;
+}
+
+.task-row + .task-row {
+  margin-top: 1rem;
+}

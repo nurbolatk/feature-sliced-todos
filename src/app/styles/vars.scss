@@ -22,4 +22,12 @@
 
   // variables
   --accent-color: var(--canopy-blue);
+
+  --on-surface-color: var(--black-pearl);
+  --surface-color: var(--snow);
+}
+
+.dark {
+  --surface-color: var(--jaguar);
+  --on-surface-color: var(--snow);
 }

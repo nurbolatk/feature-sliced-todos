@@ -22,9 +22,7 @@ const TaskListPage = () => {
             {error && <p style={{color: 'red'}}>{error}</p>}
             {
                 tasks?.map(task => (
-                    <div key={task.id}>
-                        <TaskRow data={task} titleHref={`/${task.id}`} before={<ToggleTask task={task}/>}/>
-                    </div>
+                    <TaskRow key={task.id} data={task} titleHref={`/${task.id}`} before={<ToggleTask task={task}/>}/>
                 ))
             }
         </div>
