@@ -17,7 +17,7 @@ const TaskListPage = () => {
         <div className={styles.header}>App Header</div>
         <div className={styles.body}>
             <TaskFilters/>
-            <CreateTaskCard/>
+            <CreateTaskCard className="mb-6"/>
             {error && <p style={{color: 'red'}}>{error}</p>}
             {
                 tasks?.map(task => (

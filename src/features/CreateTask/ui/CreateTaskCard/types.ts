@@ -1,6 +1,6 @@
 export interface FormElements extends HTMLFormControlsCollection {
     title: HTMLInputElement,
-    completed: RadioNodeList
+    completed: HTMLInputElement
 }
 
 export interface TaskCardFormElement extends HTMLFormElement {

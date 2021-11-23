@@ -10,7 +10,7 @@ export const TaskFilters = (): JSX.Element => {
         dispatch(taskModel.actions.setFilter(value.toUpperCase() as FILTER_OPTIONS))
     }
 
-    return <div>
+    return <div className="my-5">
         <label>
             <input type="radio" name="filter" value="all" checked={filter === "ALL"}
                    onChange={handleRadioChange}/>

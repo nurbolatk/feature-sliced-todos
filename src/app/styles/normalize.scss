@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
+*, *::after, *::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 62.5%;
   height: 100%;
+  box-sizing: border-box;
 }
 
 body {

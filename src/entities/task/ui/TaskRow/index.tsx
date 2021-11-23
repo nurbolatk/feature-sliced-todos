@@ -8,7 +8,7 @@ export type TaskRowProps = {
 
 export const TaskRow = ({data}: TaskRowProps) => {
     return <div className={cn(styles['task-row'], {[styles.completed]: data.completed})}>
-        <label>
+        <label className={styles.label}>
             <ToggleTask task={data}/>
             {data.title}
         </label>
