@@ -1,16 +1,19 @@
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "shared/store";
 import {TaskCard, taskModel} from "entities/task";
+import {ToggleTask} from "../../features/ToggleTask";
 
 const TaskDetailsPage = (): JSX.Element => {
     const {id} = useParams<{ id: string }>()
 
-    const task = useAppSelector(taskModel.selectors.selectTaskById(id))
+    const {task, status} = useAppSelector(taskModel.selectors.selectTaskById(id))
 
-    const isLoading = task.status === 'idle' || task.status === 'pending'
-    
+    const isLoading = status === 'idle' || status === 'pending'
+
     return <div>
-        <TaskCard data={task.task} loading={isLoading}/>
+        {task && <TaskCard data={task} loading={isLoading}>
+            <ToggleTask task={task}/>
+        </TaskCard>}
     </div>
 }
 

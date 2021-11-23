@@ -1,19 +1,22 @@
 import {Task} from "shared/api";
-import {Link} from "react-router-dom";
-import {HTMLAttributes} from "react";
+import {HTMLAttributes, useCallback} from "react";
+import {ToggleTask} from "../../../../features/ToggleTask";
 
 type TaskCardProps = {
-    data?: Task,
-    titleHref?: string,
+    data: Task,
     loading?: boolean
 } & HTMLAttributes<HTMLDivElement>
 
-export const TaskCard = ({data, titleHref, loading, children, ...cardProps}: TaskCardProps): JSX.Element => {
+export const TaskCard = ({data, loading, children, ...cardProps}: TaskCardProps): JSX.Element => {
+    const handleDelete = useCallback(() => {
+        const res = window.confirm('Are you sure you want to delete this task?')
+        console.log(res)
+    }, [])
     return <div
         {...cardProps}
     >
-        {loading ? 'Loading...' : `Task #${data?.id}`}
-        {titleHref ? <Link to={titleHref}>{data?.title}</Link> : data?.title}
-        {children}
+        <ToggleTask task={data}/>
+        {loading ? 'Loading...' : `${data.title}`}
+        <button onClick={handleDelete}>delete</button>
     </div>
 }

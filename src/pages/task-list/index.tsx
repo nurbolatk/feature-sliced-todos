@@ -2,7 +2,7 @@ import {taskModel, TaskRow} from "entities/task";
 import {useAppSelector} from "shared/store";
 import {TaskFilters} from "features/TaskFilters";
 import {CreateTaskCard} from "features/CreateTask";
-import {ToggleTask} from "features/ToggleTask";
+import styles from './styles.module.scss'
 
 const TaskListPage = () => {
     const {status, tasks, error} = useAppSelector(taskModel.selectors.selectTasks)
@@ -13,16 +13,15 @@ const TaskListPage = () => {
             <p>Loading...</p>
         </div>
     }
-    return <div>
-        <div>App Header</div>
-        <div><TaskFilters/></div>
-        <CreateTaskCard/>
-
-        <div>
+    return <div className={styles.container}>
+        <div className={styles.header}>App Header</div>
+        <div className={styles.body}>
+            <TaskFilters/>
+            <CreateTaskCard/>
             {error && <p style={{color: 'red'}}>{error}</p>}
             {
                 tasks?.map(task => (
-                    <TaskRow key={task.id} data={task} titleHref={`/${task.id}`} before={<ToggleTask task={task}/>}/>
+                    <TaskRow key={task.id} data={task}/>
                 ))
             }
         </div>

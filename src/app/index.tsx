@@ -7,10 +7,10 @@ import {DataFetcher} from 'entities/task'
 
 const App = (): JSX.Element => {
 
-    return <div>
+    return <>
         <DataFetcher/>
         <Routing/>
-    </div>
+    </>
 }
 
 export default withProviders(App)

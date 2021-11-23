@@ -1,10 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+
 html {
   scroll-behavior: smooth;
   font-size: 62.5%;
+  height: 100%;
 }
 
 body {
-  font-size: 1.6rem;
+  font-size: 2rem;
   color: var(--on-surface-color);
-  background-color: var(--surface-color);
+  background-color: lavender;
+  font-family: 'Roboto Mono', monospace;
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
 }
